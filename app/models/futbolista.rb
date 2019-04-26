@@ -3,8 +3,6 @@ class Futbolista < ActiveRecord::Base
   belongs_to :club
   belongs_to :contract
 
-  validates :contract_id, presence: true
-  validates :club_id, presence: true
   validates :agent_id, presence: true
   validate :contract_status_accurate
 

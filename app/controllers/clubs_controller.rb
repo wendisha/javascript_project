@@ -13,7 +13,7 @@ class ClubsController < ApplicationController
   end
 
   def create
-
+    @club = Club.create(club_params)
   end
 
   def edit
@@ -22,6 +22,10 @@ class ClubsController < ApplicationController
 
   def update
 
-  end 
+  end
+
+  def club_params
+    params.require(:club).permit(:name, :city, :nation, :league_division)
+  end
 
 end

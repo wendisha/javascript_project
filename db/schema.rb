@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 2019_04_25_235714) do
     t.string "city"
     t.string "nation"
     t.string "league_division"
-    t.string "string"
   end
 
   create_table "contracts", force: :cascade do |t|

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_25_235714) do
+ActiveRecord::Schema.define(version: 2019_04_26_192036) do
 
   create_table "agents", force: :cascade do |t|
     t.string "name"
@@ -42,6 +42,11 @@ ActiveRecord::Schema.define(version: 2019_04_25_235714) do
     t.integer "agent_id"
     t.integer "club_id"
     t.integer "contract_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "password_digest"
   end
 
 end

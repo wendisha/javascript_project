@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  root 'sessions#home'
   resources :agents
   resources :clubs
   resources :contracts
@@ -9,5 +10,5 @@ Rails.application.routes.draw do
   resources :sessions, only: [:create, :destroy]
   resources :users, only: [:new, :create, :show] do
     resources :contracts, only: [:index]
-  end 
+  end
 end

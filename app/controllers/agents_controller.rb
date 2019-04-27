@@ -29,7 +29,7 @@ class AgentsController < ApplicationController
   end
 
   def agent_params
-    params.require(:agent).permit(:name, :country_of_origin)
+    params.require(:agent).permit(:name, :country_of_origin, futbolista_attributes: [:id])
   end
-  
+
 end

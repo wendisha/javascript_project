@@ -1,14 +1,17 @@
 Rails.application.routes.draw do
 
   root 'sessions#home'
-  resources :agents
+  get '/login' => 'sessions#new'
+  post '/login' => 'sessions#create'
+  post '/logout' => 'sessions#destroy'
+  resources :agents, only: [:create, :show, :index, :edit, :update, :destroy]
   resources :clubs
-  resources :contracts
+  resources :contracts, only: [:show, :new, :create, :edit, :update]
   resources :futbolistas do
-    resources :agents, only: [:show, :new]
+    resources :agents, only: [:new]
   end
-  resources :sessions, only: [:create, :destroy]
-  resources :users, only: [:new, :create, :show] do
+  resources :users, only: [:new, :create, :show, :edit, :update] do
     resources :contracts, only: [:index]
   end
+
 end

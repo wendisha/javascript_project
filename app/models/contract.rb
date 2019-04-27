@@ -10,7 +10,7 @@ class Contract < ActiveRecord::Base
   validate :status_terminology
 
   def status_terminology
-    if self.status != "in the works" && self.status != "pending" && self.status != "in effect" && self.status != "completed" && self.status != "terminated early"
+    if self.status != "in the works" && self.status != "pending" && self.status != "in effect" && self.status != "completed" && self.status != "terminated early" && self.status != "dead"
       errors.add(:title, "contract status must adhere to status terminology")
     end
   end

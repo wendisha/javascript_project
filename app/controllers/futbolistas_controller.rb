@@ -29,7 +29,7 @@ class FutbolistasController < ApplicationController
   end
 
   def futbolista_params
-    params.require(:futbolista).permit(:name, :country_of_origin, :position, :agent_id, :club_id, :contract_id, agent_attributes: [:agent_name])
+    params.require(:futbolista).permit(:name, :country_of_origin, :position, :agent_id, :club_id, :contract_id)
   end
 
 end

@@ -3,5 +3,7 @@ class Agent < ActiveRecord::Base
   has_many :clubs, through: :futbolistas
   has_many :contracts
 
-  validates :name, presence:true
+  accepts_nested_attributes_for :futbolista
+
+  validates :name, presence: true
 end

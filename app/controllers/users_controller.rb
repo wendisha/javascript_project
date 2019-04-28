@@ -1,16 +1,21 @@
 class UsersController < ApplicationController
 
   def new
+    if params[:error_message]
+      @error_message = params[:error_message]
+    end
     @user = User.new
   end
 
   def create
-    if !User.find_by(name: params[:user][:name])
+    if params[:user][:name].empty? || params[:user][:password].empty?
+      redirect_to new_user_path(error_message: "please enter a username and a password")
+    elsif !User.find_by(name: params[:user][:name])
       @user = User.create(name: params[:user][:name], password: params[:user][:password])
       session[:user_id] = @user.id
       redirect_to user_path(@user)
     else
-      redirect_to login_path
+      redirect_to new_user_path(error_message: "please select a different user name. that one is taken")
     end
   end
 

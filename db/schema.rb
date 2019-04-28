@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 2019_04_26_192036) do
   create_table "agents", force: :cascade do |t|
     t.string "name"
     t.string "country_of_origin"
+    t.integer "user_id"
   end
 
   create_table "clubs", force: :cascade do |t|
@@ -22,6 +23,7 @@ ActiveRecord::Schema.define(version: 2019_04_26_192036) do
     t.string "city"
     t.string "nation"
     t.string "league_division"
+    t.integer "user_id"
   end
 
   create_table "contracts", force: :cascade do |t|
@@ -33,6 +35,7 @@ ActiveRecord::Schema.define(version: 2019_04_26_192036) do
     t.integer "futbolista_id"
     t.integer "club_id"
     t.integer "agent_id"
+    t.integer "user_id"
   end
 
   create_table "futbolistas", force: :cascade do |t|
@@ -42,6 +45,7 @@ ActiveRecord::Schema.define(version: 2019_04_26_192036) do
     t.integer "agent_id"
     t.integer "club_id"
     t.integer "contract_id"
+    t.integer "user_id"
   end
 
   create_table "users", force: :cascade do |t|

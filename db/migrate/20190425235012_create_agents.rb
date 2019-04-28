@@ -3,6 +3,7 @@ class CreateAgents < ActiveRecord::Migration[5.2]
     create_table :agents do |t|
       t.string :name
       t.string :country_of_origin
+      t.integer :user_id
     end
   end
 end

@@ -5,6 +5,7 @@ class CreateClubs < ActiveRecord::Migration[5.2]
       t.string :city
       t.string :nation
       t.string :league_division
+      t.integer :user_id
     end
   end
 end

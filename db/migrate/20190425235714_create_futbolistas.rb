@@ -7,6 +7,7 @@ class CreateFutbolistas < ActiveRecord::Migration[5.2]
       t.integer :agent_id
       t.integer :club_id
       t.integer :contract_id
+      t.integer :user_id
     end
   end
 end

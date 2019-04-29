@@ -18,7 +18,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to user_path(@user)
     else
-      redirect_to new_user_path(error_message: "please select a different user name. that one is taken")
+      redirect_to new_user_path(error_message: "please select a different user name. that one is already in use")
     end
   end
 

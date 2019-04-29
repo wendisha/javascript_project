@@ -9,6 +9,7 @@ class Contract < ActiveRecord::Base
   validates :agent_id, presence: true
   validates :status, presence: true
   validate :status_terminology
+  validates :user_id, presence: true
 
   def status_terminology
     if self.status != "in the works" && self.status != "pending" && self.status != "in effect" && self.status != "completed" && self.status != "terminated early" && self.status != "dead"

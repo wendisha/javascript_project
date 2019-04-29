@@ -5,6 +5,7 @@ class Futbolista < ActiveRecord::Base
   belongs_to :user
 
   validate :contract_status_accurate
+  validates :user_id, presence: true
 
   scope :belonging_to_futbolista, => { where(futbolista: self) }
   scope :belonging_to_futbolista_and_in_effect, => { belonging_to_futbolista.where(status: "in effect") }

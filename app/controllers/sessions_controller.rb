@@ -1,12 +1,8 @@
 class SessionsController < ApplicationController
 
   def new
-    if !session[:user_id].nil?
-      redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "you are already logged in")
-    end
-    if params[:error_message]
-      @error_message = params[:error_message]
-    end
+    already_logged_in
+    if_error
   end
 
   def create
@@ -31,8 +27,6 @@ class SessionsController < ApplicationController
   end
 
   def home
-    if !session[:user_id].nil?
-      redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "you are already logged in")
-    end
+    already_logged_in
   end
 end

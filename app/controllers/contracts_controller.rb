@@ -1,27 +1,17 @@
 class ContractsController < ApplicationController
 
   def index
-    if session[:user_id].nil?
-      redirect_to login_path(error_message: "please log in")
-    end
-    if session[:user_id] != params[:user_id]
-      redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your page")
-    end
-
+    if_not_logged_in
+    not_your_page_user_id_v
     @contracts = Contract.all
   end
 
   def show
-    if session[:user_id].nil?
-      redirect_to login_path(error_message: "please log in")
-    end
-    if session[:user_id] != params[:user_id]
-      redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your page")
-    end
+    if_not_logged_in
+    not_your_page_user_id_v
     if session[:user_id] != Contract.find_by_id(params[:id]).user.id
-      redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your page")
+      redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your data")
     end
-
     @contract = Contract.find_by_id(params[:id])
   end
 

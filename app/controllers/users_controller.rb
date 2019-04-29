@@ -1,12 +1,8 @@
 class UsersController < ApplicationController
 
   def new
-    if !session[:user_id].nil?
-      redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "you are already logged in")
-    end
-    if params[:error_message]
-      @error_message = params[:error_message]
-    end
+    already_logged_in
+    if_error
     @user = User.new
   end
 
@@ -23,18 +19,10 @@ class UsersController < ApplicationController
   end
 
   def show
-    if params[:error_message]
-      @error_message = params[:error_message]
-    end
-    if !session[:user_id].nil?
-      if params[:id].to_i == session[:user_id]
-        @user = User.find_by_id(params[:id])
-      else
-        redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your user page.")
-      end
-    else
-      redirect_to login_path(error_message: "please login")
-    end
+    if_not_logged_in
+    not_your_page_id_v
+    if_error
+    @user = User.find_by_id(params[:id])
   end
 
 

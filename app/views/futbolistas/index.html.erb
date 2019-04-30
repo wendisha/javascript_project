@@ -1,7 +1,0 @@
-<h1>Your Futbolistas</h1>
-
-<% if @futbolistas.length > 0 %>
-<% @futbolistas.all.each do |futbolista| %>
-<%= link_to "#{futbolista.name}", user_futbolista_path(futbolista) %>
-<% end %>
-<% end %>

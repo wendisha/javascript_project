@@ -2,7 +2,7 @@ class ClubsController < ApplicationController
 
   def index
     if_not_logged_in
-    if_not_your_page_user_id_v
+    not_your_page_user_id_v
 
     @clubs = Club.all
   end

@@ -1,9 +1,9 @@
 <h1><%= @agent.name %></h1>
 <p>Country of Origin: <%= @agent.country_of_origin %></p>
 
-<% if @agent.futbolistas.length > 0 %>
-<% @agent.futbolistas.each do |futbolista| %>
-<%= link_to "#{futbolista.name}", user_futbolista_path(futbolista.user, futbolista) %>
+<% if @agent.players.length > 0 %>
+<% @agent.players.each do |player| %>
+<%= link_to "#{player.name}", user_player_path(player.user, player) %>
 <% end %>
 <% end %>
 

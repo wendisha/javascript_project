@@ -1,0 +1,21 @@
+<h2>Create a New Player</h2><br>
+
+<% if @error_message %>
+<p><%= "#{@error_message}" %></p>
+<% end %>
+
+<%= form_tag ({controller: "players", action: "create", method: "post"}) do %>
+
+<label>Name:</label>
+<%= text_field_tag "player[name]" %><br>
+
+<label>Country of Origin:</label>
+<%= text_field_tag "player[country_of_origin]" %>
+
+<label>Position:</label>
+<%= text_field_tag "player[position]" %>
+
+<%= hidden_field_tag "player[user_id]", @user_id %><br>
+
+<%= submit_tag "Create Player" %>
+<% end %>

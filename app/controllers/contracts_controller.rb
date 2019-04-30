@@ -46,7 +46,7 @@ class ContractsController < ApplicationController
   end
 
   def contract_params
-    params.require(:contract).permit(:length, :weekly_salary, :transfer_fee, :unusual_clauses, :status, :futbolista_id, :club_id, :agent_id)
+    params.require(:contract).permit(:length, :weekly_salary, :transfer_fee, :unusual_clauses, :status, :player_id, :club_id, :agent_id)
   end
 
 end

@@ -1,0 +1,16 @@
+<h1><%= @player.name %></h1>
+<p>Country of Origin: <%= @player.country_of_origin %></p>
+<p>Position: <%= @player.position %></p>
+
+<% if @player.contracts.length > 0 %>
+<% counter = 1 %>
+<% @player.contracts.each do |contract| %>
+<%= link_to "Player Contract #{counter}", user_player_path(player.user, player) %>
+<% end %>
+<% end %>
+
+<%= link_to "Edit: #{@player.name}", edit_user_player_path(@player.user, @player) %>
+
+<%= form_tag ({controller: "players", action: "destroy", method: "delete"}) do %>
+<%= submit_tag "Delete Player" %>
+<% end %>

@@ -1,10 +1,10 @@
 class Contract < ActiveRecord::Base
-  belongs_to :futbolista
+  belongs_to :player
   belongs_to :club
   belongs_to :agent
   belongs_to :user
 
-  validates :futbolista_id, presence: true
+  validates :player_id, presence: true
   validates :club_id, presence: true
   validates :agent_id, presence: true
   validates :status, presence: true

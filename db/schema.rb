@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2019_04_26_192036) do
     t.integer "user_id"
   end
 
-  create_table "futbolistas", force: :cascade do |t|
+  create_table "players", force: :cascade do |t|
     t.string "name"
     t.string "country_of_origin"
     t.string "position"

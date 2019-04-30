@@ -1,6 +1,6 @@
 class Agent < ActiveRecord::Base
-  has_many :futbolistas
-  has_many :clubs, through: :futbolistas
+  has_many :players
+  has_many :clubs, through: :players
   has_many :contracts
   belongs_to :user
 

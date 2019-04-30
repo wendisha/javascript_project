@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     resources :contracts
     resources :agents
     resources :clubs
-    resources :futbolistas
+    resources :players
   end
 
 end

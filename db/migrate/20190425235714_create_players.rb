@@ -1,6 +1,6 @@
-class CreateFutbolistas < ActiveRecord::Migration[5.2]
+class CreatePlayers < ActiveRecord::Migration[5.2]
   def change
-    create_table :futbolistas do |t|
+    create_table :players do |t|
       t.string :name
       t.string :country_of_origin
       t.string :position

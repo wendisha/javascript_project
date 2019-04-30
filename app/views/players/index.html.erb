@@ -1,0 +1,7 @@
+<h1>Your Players</h1>
+
+<% if @players.length > 0 %>
+<% @players.all.each do |player| %>
+<%= link_to "#{player.name}", user_player_path(player) %>
+<% end %>
+<% end %>

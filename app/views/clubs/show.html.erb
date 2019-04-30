@@ -3,9 +3,9 @@
 <p>Resident Nation: <%= @club.nation %></p><br>
 <p>League Division: <%= @club.league_division %></p>
 
-<% if @club.futbolistas.length > 0 %>
-<% @club.futbolistas.each do |futbolista| %>
-<%= link_to "#{futbolista.name}", user_futbolista_path(futbolista.user, futbolista) %>
+<% if @club.players.length > 0 %>
+<% @club.players.each do |player| %>
+<%= link_to "#{player.name}", user_player_path(player.user, player) %>
 <% end %>
 <% end %>
 

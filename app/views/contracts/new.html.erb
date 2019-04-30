@@ -1,0 +1,24 @@
+<h2>Create a New Contract</h2><br>
+
+<% if @error_message %>
+<p><%= "#{@error_message}" %></p>
+<% end %>
+
+<%= form_tag ({controller: "contracts", action: "create", method: "post"}) do %>
+
+<label>Length:</label>
+<%= text_field_tag "contract[length]" %><br>
+
+<label>Weekly Salary:</label>
+<%= text_field_tag "contract[weekly_salary]" %>
+
+<label>Transfer Fee:</label>
+<%= text_field_tag "contract[transfer_fee]" %>
+
+<label>Unusual Clauses:</label>
+<%= text_field_tag "contract[unusual_clauses]" %>
+
+<%= hidden_field_tag "contract[user_id]", @user_id %><br>
+
+<%= submit_tag "Create Futbolista" %>
+<% end %>

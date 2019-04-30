@@ -20,7 +20,7 @@ class AgentsController < ApplicationController
     not_your_page_user_id_v
     if_error
     @agent = Agent.new
-    @id = params[:user_id]
+    @user_id = params[:user_id]
   end
 
   def create
@@ -46,9 +46,9 @@ class AgentsController < ApplicationController
 
   def update
     if params[:agent][:name].empty?
-      redirect_to edit_user_agent_path(error_message: "an agent must have a name")
+      redirect_to edit_user_agent_path(User.find_by_id(params[:user_id]), Agent.find_by_id(params[:id]), error_message: "an agent must have a name")
     elsif Agent.find_by(user_id: params[:agent][:user_id], name: params[:agent][:name]).count > 1
-      redirect_to edit_user_agent_path(error_message: "you have another agent by that name")
+      redirect_to edit_user_agent_path(User.find_by_id(params[:user_id]), Agent.find_by_id(params[:id]), error_message: "you have another agent by that name")
     else
       @agent = Agent.find_by(user_id: params[:agent][:user_id], name: params[:agent][:name])
       @agent.update(agent_params)
@@ -61,7 +61,7 @@ class AgentsController < ApplicationController
   end
 
   def agent_params
-    params.require(:agent).permit(:name, :country_of_origin, :user_id)
+    params.require(:agent).permit(:name, :country_of_origin, :user_id, :id)
   end
 
 end

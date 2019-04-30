@@ -15,7 +15,7 @@
 <label>Position:</label>
 <%= text_field_tag "futbolista[position]", @futbolista.position %>
 
-<%= hidden_field_tag "futbolista[user_id]", @futbolista.id %><br>
+<%= hidden_field_tag "futbolista[user_id]", @futbolista.user_id %><br>
 
 <%= submit_tag "Update Futbolista" %>
 <% end %>

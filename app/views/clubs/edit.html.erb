@@ -18,7 +18,9 @@
 <label>League/Division:</label>
 <%= text_field_tag "club[league_division]", @club.league_division %><br>
 
-<%= hidden_field_tag "club[user_id]", @club.id %><br>
+<%= hidden_field_tag "club[user_id]", @club.user_id %><br>
+
+<%= hidden_field_tag "club[id]", @club.id %><br>
 
 <%= submit_tag "Update Club" %>
 <% end %>

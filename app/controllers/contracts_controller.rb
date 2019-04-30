@@ -20,7 +20,7 @@ class ContractsController < ApplicationController
     not_your_page_user_id_v
     if_error
     @contract = Contract.new
-    @id = params[:user_id]
+    @user_id = params[:user_id]
   end
 
   def create

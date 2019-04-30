@@ -1,0 +1,21 @@
+<h2>Create a New Futbolista</h2><br>
+
+<% if @error_message %>
+<p><%= "#{@error_message}" %></p>
+<% end %>
+
+<%= form_tag ({controller: "futbolistas", action: "create", method: "post"}) do %>
+
+<label>Name:</label>
+<%= text_field_tag "futbolista[name]" %><br>
+
+<label>Country of Origin:</label>
+<%= text_field_tag "futbolista[country_of_origin]" %>
+
+<label>Position:</label>
+<%= text_field_tag "futbolista[position]" %>
+
+<%= hidden_field_tag "futbolista[user_id]", @id %><br>
+
+<%= submit_tag "Create Futbolista" %>
+<% end %>

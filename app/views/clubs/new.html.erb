@@ -1,18 +1,24 @@
-<h2>Create a New Agent</h2><br>
+<h2>Create a New Club</h2><br>
 
 <% if @error_message %>
 <p><%= "#{@error_message}" %></p>
 <% end %>
 
-<%= form_tag ({controller: "agents", action: "create", method: "post"}) do %>
+<%= form_tag ({controller: "clubs", action: "create", method: "post"}) do %>
 
 <label>Name:</label>
-<%= text_field_tag "agent[name]" %><br>
+<%= text_field_tag "club[name]" %><br>
 
-<label>Country of Origin:</label>
-<%= text_field_tag "agent[country_of_origin]" %>
+<label>Resident City:</label>
+<%= text_field_tag "club[city]" %>
 
-<%= hidden_field_tag "agent[user_id]", @id %><br>
+<label>Resident Nation:</label>
+<%= text_field_tag "club[nation]" %>
 
-<%= submit_tag "Create Agent" %>
+<label>League/Division:</label>
+<%= text_field_tag "club[league_division]" %>
+
+<%= hidden_field_tag "club[user_id]", @id %><br>
+
+<%= submit_tag "Create Club" %>
 <% end %>

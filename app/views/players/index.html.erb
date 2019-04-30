@@ -2,6 +2,6 @@
 
 <% if @players.length > 0 %>
 <% @players.all.each do |player| %>
-<%= link_to "#{player.name}", user_player_path(player) %>
+<%= link_to "#{player.name}", user_player_path(player.user, player) %><br>
 <% end %>
 <% end %>

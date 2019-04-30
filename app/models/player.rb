@@ -1,8 +1,9 @@
 class Player < ActiveRecord::Base
   belongs_to :agent
   belongs_to :club
-  belongs_to :contract
+  # belongs_to :contract
   belongs_to :user
+  has_many :contracts
 
   # validate :contract_status_accurate
   validates :user_id, presence: true

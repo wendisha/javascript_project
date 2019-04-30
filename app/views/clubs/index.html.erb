@@ -2,6 +2,6 @@
 
 <% if @clubs.length > 0 %>
 <% @clubs.all.each do |club| %>
-<%= link_to "#{club.name}", user_club_path(club) %>
+<%= link_to "#{club.name}", user_club_path(club.user, club) %><br>
 <% end %>
 <% end %>

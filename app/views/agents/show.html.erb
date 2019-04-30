@@ -1,14 +1,16 @@
 <h1><%= @agent.name %></h1>
 <p>Country of Origin: <%= @agent.country_of_origin %></p>
 
-<% if @agent.players.length > 0 %>
-<% @agent.players.each do |player| %>
-<%= link_to "#{player.name}", user_player_path(player.user, player) %>
-<% end %>
-<% end %>
-
 <%= link_to "Edit: #{@agent.name}", edit_user_agent_path(@agent.user, @agent) %>
 
 <%= form_tag ({controller: "agents", action: "destroy", method: "delete"}) do %>
 <%= submit_tag "Delete Agent" %>
+<% end %>
+
+<br>
+<label>Current Clients: </label><br>
+<% if @agent.players.length > 0 %>
+<% @agent.players.each do |player| %>
+<%= link_to "#{player.name}", user_player_path(player.user, player) %>
+<% end %>
 <% end %>

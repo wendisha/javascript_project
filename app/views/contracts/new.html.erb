@@ -18,6 +18,9 @@
 <label>Unusual Clauses:</label>
 <%= text_field_tag "contract[unusual_clauses]" %>
 
+<label>Status:</label>
+<%= text_field_tag "contract[status]" %>
+
 <%= hidden_field_tag "contract[user_id]", @user_id %><br>
 
 <%= submit_tag "Create Futbolista" %>

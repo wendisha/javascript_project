@@ -17,7 +17,11 @@ class ClubsController < ApplicationController
   end
 
   def new
+    if_not_logged_in
+    not_your_page_user_id_v
+    if_error
     @club = Club.new
+    @id = params[:user_id]
   end
 
   def create
@@ -25,6 +29,12 @@ class ClubsController < ApplicationController
   end
 
   def edit
+    if_not_logged_in
+    not_your_page_user_id_v
+    if session[:user_id] != Club.find_by_id(params[:id]).user.id
+      redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your data")
+    end
+    if_error
     @club = Club.find_by_id(params[:id])
   end
 
@@ -33,7 +43,7 @@ class ClubsController < ApplicationController
   end
 
   def club_params
-    params.require(:club).permit(:name, :city, :nation, :league_division)
+    params.require(:club).permit(:name, :city, :nation, :league_division, :user_id)
   end
 
 end

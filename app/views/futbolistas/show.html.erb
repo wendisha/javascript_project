@@ -1,3 +1,16 @@
 <h1><%= @futbolista.name %></h1>
 <p>Country of Origin: <%= @futbolista.country_of_origin %></p>
 <p>Position: <%= @futbolista.position %></p>
+
+<% if @futbolista.contracts.length > 0 %>
+<% counter = 1 %>
+<% @futbolista.contracts.each do |contract| %>
+<%= link_to "Player Contract #{counter}", user_futbolista_path(futbolista.user, futbolista) %>
+<% end %>
+<% end %>
+
+<%= link_to "Edit: #{@futbolista.name}", edit_user_futbolista_path(@futbolista.user, @futbolista) %>
+
+<%= form_tag ({controller: "futbolistas", action: "destroy", method: "delete"}) do %>
+<%= submit_tag "Delete Futbolista" %>
+<% end %>

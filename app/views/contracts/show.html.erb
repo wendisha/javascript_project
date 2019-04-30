@@ -5,3 +5,9 @@
 <p>Unusual Clauses: <%= @contract.unusual_clauses %></p><br>
 <p>Current Status: <%= @contract.status %></p><br>
 <p>Player Agent: <%= @contract.agent %></p><br>
+
+<%= link_to "Edit This Contract", edit_user_contract_path(@contract.user, @contract) %>
+
+<%= form_tag ({controller: "contracts", action: "destroy", method: "delete"}) do %>
+<%= submit_tag "Delete Contract" %>
+<% end %>

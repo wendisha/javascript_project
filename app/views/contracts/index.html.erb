@@ -2,7 +2,7 @@
 
 <% if @contracts.length > 0 %>
 <% @contracts.all.each do |contract| %>
-<%= link_to "#{contract.name}", user_contract_path(contract) %>
+<%= link_to "#{contract.player.name} & #{contract.club.name}", user_contract_path(contract.user, contract) %>
 <% end %>
 <% end %>
 <br>

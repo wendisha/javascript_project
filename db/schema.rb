@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_26_192036) do
+ActiveRecord::Schema.define(version: 2019_05_01_063528) do
 
   create_table "agents", force: :cascade do |t|
     t.string "name"
@@ -28,8 +28,8 @@ ActiveRecord::Schema.define(version: 2019_04_26_192036) do
 
   create_table "contracts", force: :cascade do |t|
     t.string "length"
-    t.integer "weekly_salary"
-    t.integer "transfer_fee"
+    t.string "weekly_salary"
+    t.string "transfer_fee"
     t.text "unusual_clauses"
     t.string "status"
     t.integer "player_id"
@@ -46,6 +46,10 @@ ActiveRecord::Schema.define(version: 2019_04_26_192036) do
     t.integer "club_id"
     t.integer "contract_id"
     t.integer "user_id"
+  end
+
+  create_table "statuses", force: :cascade do |t|
+    t.string "wording"
   end
 
   create_table "users", force: :cascade do |t|

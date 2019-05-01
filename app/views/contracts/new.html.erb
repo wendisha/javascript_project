@@ -10,16 +10,25 @@
 <%= text_field_tag "contract[length]" %><br>
 
 <label>Weekly Salary:</label>
-<%= text_field_tag "contract[weekly_salary]" %>
+<%= text_field_tag "contract[weekly_salary]" %><br>
 
 <label>Transfer Fee:</label>
-<%= text_field_tag "contract[transfer_fee]" %>
+<%= text_field_tag "contract[transfer_fee]" %><br>
 
 <label>Unusual Clauses:</label>
-<%= text_field_tag "contract[unusual_clauses]" %>
+<%= text_field_tag "contract[unusual_clauses]" %><br>
 
 <label>Status:</label>
-<%= text_field_tag "contract[status]" %>
+<%= collection_select :contract, :status, Status.all, :wording, :wording %><br>
+
+<label>Player:</label>
+<%= collection_select :contract, :player_id, Player.all, :id, :name %><br>
+
+<label>Club:</label>
+<%= collection_select :contract, :club_id, Club.all, :id, :name %><br>
+
+<label>Agent:</label>
+<%= collection_select :contract, :agent_id, Agent.all, :id, :name %><br>
 
 <%= hidden_field_tag "contract[user_id]", @user_id %><br>
 

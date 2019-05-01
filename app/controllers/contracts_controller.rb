@@ -24,7 +24,10 @@ class ContractsController < ApplicationController
   end
 
   def create
+    binding.pry
     @contract = Contract.create(contract_params)
+    binding.pry
+    redirect_to user_contract_path(@contract.user, @contract)
   end
 
   def edit

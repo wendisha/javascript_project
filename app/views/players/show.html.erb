@@ -11,12 +11,12 @@
 <%= submit_tag "Delete Player" %>
 <% end %>
 
-<br><label>All Contracts (past, current, future):</label><br>
+<br><label>All Contracts (past, current, future):</label><br><br>
 <% if @player.contracts.length > 0 %>
 <% counter = 1 %>
 <% @player.contracts.each do |contract| %>
-<%= link_to "Player Contract #{counter}: #{contract.status}", user_contract_path(contract.user, contract) %>
+<%= link_to "Contract #{counter}: #{contract.status}", user_contract_path(contract.user, contract) %>
 <% end %>
 <% end %>
-
+<br>
 <br><%= link_to "Your Home Page", user_path(User.find_by_id(session[:user_id])) %>

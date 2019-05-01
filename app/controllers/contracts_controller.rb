@@ -20,7 +20,7 @@ class ContractsController < ApplicationController
     not_your_page_user_id_v
     if_error
     @contract = Contract.new
-    @user_id = params[:user_id]
+    @user_id = session[:user_id]
   end
 
   def create
@@ -49,7 +49,7 @@ class ContractsController < ApplicationController
   end
 
   def contract_params
-    params.require(:contract).permit(:length, :weekly_salary, :transfer_fee, :unusual_clauses, :status, :player_id, :club_id, :agent_id)
+    params.require(:contract).permit(:length, :weekly_salary, :transfer_fee, :unusual_clauses, :status, :player_id, :club_id, :agent_id, :user_id)
   end
 
 end

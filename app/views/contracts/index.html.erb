@@ -5,5 +5,5 @@
 <%= link_to "#{contract.player.name} & #{contract.club.name}", user_contract_path(contract.user, contract) %>
 <% end %>
 <% end %>
-<br>
+<br><br>
 <%= link_to "Create a New Contract", new_user_contract_path(User.find_by_id(session[:user_id])) %>

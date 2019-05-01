@@ -57,6 +57,9 @@ class ClubsController < ApplicationController
     end
   end
 
+  def destroy
+  end
+
   def club_params
     params.require(:club).permit(:name, :city, :nation, :league_division, :user_id, :id)
   end

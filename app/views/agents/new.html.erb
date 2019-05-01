@@ -1,8 +1,7 @@
 <h2>Create a New Agent</h2><br>
 
-<% if @error_message %>
-<p><%= "#{@error_message}" %></p>
-<% end %>
+<%= render 'error' %>
+
 
 <%= form_tag ({controller: "agents", action: "create", method: "post"}) do %>
 

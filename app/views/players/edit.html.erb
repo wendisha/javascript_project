@@ -1,8 +1,6 @@
 <h2>Edit Players</h2><br>
 
-<% if @error_message %>
-<p><%= "#{@error_message}" %></p>
-<% end %>
+<%= render 'error' %>
 
 <%= form_tag ({controller: "players", action: "update", method: "post"}) do %>
 
@@ -13,7 +11,13 @@
 <%= text_field_tag "player[country_of_origin]", @player.country_of_origin %><br>
 
 <label>Position:</label>
-<%= text_field_tag "player[position]", @player.position %>
+<%= text_field_tag "player[position]", @player.position %><br>
+
+<label>Agent:</label>
+<%= collection_select :player, :agent_id, Agent.all, :id, :name %><br>
+
+<label>Club:</label>
+<%= collection_select :player, :club_id, Club.all, :id, :name %><br>
 
 <%= hidden_field_tag "player[user_id]", @player.user_id %><br>
 

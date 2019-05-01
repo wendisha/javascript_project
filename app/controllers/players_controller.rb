@@ -45,7 +45,7 @@ class PlayersController < ApplicationController
   end
 
   def update
-    if params[:player][:name].empty?
+    if params[:player][:name].empty? || params[:player][:agent_id].empty? || params[:player][:club_id].empty?
       redirect_to edit_user_player_path(User.find_by_id(params[:user_id]), Player.find_by_id(params[:id]), error_message: "a player must have a name")
     elsif Player.find_by(user_id: params[:player][:user_id], name: params[:player][:name]).count > 1
       redirect_to edit_user_player_path(User.find_by_id(params[:user_id]), Player.find_by_id(params[:id]), error_message: "you have another player by that name")
@@ -57,7 +57,6 @@ class PlayersController < ApplicationController
   end
 
   def destroy
-
   end
 
   def player_params

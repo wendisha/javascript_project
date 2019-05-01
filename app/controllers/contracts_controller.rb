@@ -24,10 +24,14 @@ class ContractsController < ApplicationController
   end
 
   def create
-    binding.pry
-    @contract = Contract.create(contract_params)
-    binding.pry
-    redirect_to user_contract_path(@contract.user, @contract)
+    if params[:contract][:player_id].empty? || params[:contract][:agent_id].empty? || params[:contract][:club_id].empty? || params[:contract][:status].empty?
+      redirect_to new_user_contract_path(error_message: "a contract must have a player, an agent, a club and a status")
+    elsif Contract.find_by(player_id: params[:contract][:player_id], club_id: params[:contract][:club_id])
+      redirect_to new_user_contract_path(error_message: "you already have a contract between that player and that club")
+    else
+      @contract = Contract.create(contract_params)
+      redirect_to user_contract_path(@contract.user, @contract)
+    end
   end
 
   def edit
@@ -41,11 +45,18 @@ class ContractsController < ApplicationController
   end
 
   def update
-
+    if params[:contract][:player_id].empty? || params[:contract][:agent_id].empty? || params[:contract][:club_id].empty? || params[:contract][:status].empty?
+      redirect_to edit_user_contract_path(error_message: "a contract must have a player, an agent, a club and a status")
+    elsif Contract.find_by(player_id: params[:contract][:player_id], club_id: params[:contract][:club_id])
+      redirect_to edit_user_contract_path(error_message: "you already have a contract between that player and that club")
+    else
+      @contract = Contract.find_by(user_id: params[:user_id], player_id: params[:player_id], club_id: params[:club_id])
+      Contract.update(contract_params)
+      redirect_to user_contract_path(@contract.user, @contract)
+    end
   end
 
   def destroy
-
   end
 
   def contract_params

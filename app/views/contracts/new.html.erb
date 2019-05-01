@@ -1,8 +1,6 @@
 <h2>Create a New Contract</h2><br>
 
-<% if @error_message %>
-<p><%= "#{@error_message}" %></p>
-<% end %>
+<%= render 'error' %>
 
 <%= form_tag ({controller: "contracts", action: "create", method: "post"}) do %>
 

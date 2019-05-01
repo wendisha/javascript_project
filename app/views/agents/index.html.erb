@@ -1,6 +1,6 @@
 <h1>Your Agents</h1>
 
-<% if @agents.length > 0 %>
+<% if !@agents.nil? %>
 <% @agents.all.each do |agent| %>
 <%= link_to "#{agent.name}", user_agent_path(agent.user, agent) %><br>
 <% end %>

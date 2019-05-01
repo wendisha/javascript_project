@@ -6,16 +6,16 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if auth['info']['image']
+    if !auth.nil?
       @user = User.find_or_create_by(uid: auth['uid']) do |u|
         u.name = auth['info']['name']
         u.email = auth['info']['email']
         u.image = auth['info']['image']
       end
-
+      @user.password = SecureRandom.hex(9)
+      @user.save
       session[:user_id] = @user.id
-
-      render 'welcome/home'
+      redirect_to user_path(@user)
     else
       if params[:name].empty? || params[:password].empty?
         redirect_to login_path(error_message: "please fill in both the username & the password.")
@@ -30,7 +30,7 @@ class SessionsController < ApplicationController
           redirect_to login_path(error_message: "that password is incorrect.")
         end
       end
-    end 
+    end
   end
 
   def destroy

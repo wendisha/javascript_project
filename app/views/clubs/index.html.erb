@@ -1,6 +1,6 @@
 <h1>Your Clubs</h1>
 
-<% if @clubs.length > 0 %>
+<% if !@clubs.nil? %>
 <% @clubs.all.each do |club| %>
 <%= link_to "#{club.name}", user_club_path(club.user, club) %><br>
 <% end %>

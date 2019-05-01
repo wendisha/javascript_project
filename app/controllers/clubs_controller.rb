@@ -4,7 +4,7 @@ class ClubsController < ApplicationController
     if_not_logged_in
     not_your_page_user_id_v
 
-    @clubs = Club.all
+    @clubs = Club.find_by(user_id: session[:user_id])
   end
 
   def show

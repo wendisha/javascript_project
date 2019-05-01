@@ -3,7 +3,7 @@ class PlayersController < ApplicationController
   def index
     if_not_logged_in
     not_your_page_user_id_v
-    @players = Player.all
+    @players = Player.find_by(user_id: session[:user_id])
   end
 
   def show

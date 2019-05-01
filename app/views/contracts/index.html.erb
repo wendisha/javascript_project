@@ -1,6 +1,6 @@
 <h1>Your Contract Investigations</h1>
 
-<% if @contracts.length > 0 %>
+<% if !@contracts.nil? %>
 <% @contracts.all.each do |contract| %>
 <%= link_to "#{contract.player.name} & #{contract.club.name}", user_contract_path(contract.user, contract) %><br>
 <% end %>

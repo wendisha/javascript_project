@@ -24,8 +24,8 @@ class PlayersController < ApplicationController
   end
 
   def create
-    if params[:player][:name].empty?
-      redirect_to new_user_player_path(error_message: "a player must have a name")
+    if params[:player][:name].empty? || params[:player][:agent_id].empty? || params[:player][:club_id].empty?
+      redirect_to new_user_player_path(error_message: "a player must have a name, an agent and a club")
     elsif Player.find_by(user_id: params[:player][:user_id], name: params[:player][:name])
       redirect_to new_user_player_path(error_message: "you already have a player by that name")
     else

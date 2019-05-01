@@ -5,3 +5,5 @@
 <%= link_to "#{player.name}", user_player_path(player.user, player) %><br>
 <% end %>
 <% end %>
+<br>
+<%= link_to "Create a New Player", new_user_player_path(User.find_by_id(session[:user_id])) %>

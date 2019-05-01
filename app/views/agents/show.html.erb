@@ -8,9 +8,4 @@
 <% end %>
 
 <br>
-<label>Current Clients: </label><br>
-<% if @agent.players.length > 0 %>
-<% @agent.players.each do |player| %>
-<%= link_to "#{player.name}", user_player_path(player.user, player) %>
-<% end %>
-<% end %>
+<br><%= link_to "Your Home Page", user_path(User.find_by_id(session[:user_id])) %>

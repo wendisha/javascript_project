@@ -5,3 +5,5 @@
 <%= link_to "#{agent.name}", user_agent_path(agent.user, agent) %><br>
 <% end %>
 <% end %>
+<br>
+<%= link_to "Create a New Agent", new_user_agent_path(User.find_by_id(session[:user_id])) %>

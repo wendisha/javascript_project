@@ -10,10 +10,14 @@
 <%= text_field_tag "player[name]" %><br>
 
 <label>Country of Origin:</label>
-<%= text_field_tag "player[country_of_origin]" %>
+<%= text_field_tag "player[country_of_origin]" %><br>
 
 <label>Position:</label>
-<%= text_field_tag "player[position]" %>
+<%= text_field_tag "player[position]" %><br>
+
+<%= collection_select :player, :agent_id, Agent.all, :id, :name %><br>
+
+<%= collection_select :player, :club_id, Club.all, :id, :name %><br>
 
 <%= hidden_field_tag "player[user_id]", @user_id %><br>
 

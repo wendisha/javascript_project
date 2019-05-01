@@ -1,16 +1,12 @@
 <h1><%= @club.name %></h1>
 <p>Resident City: <%= @club.city %></p><br>
 <p>Resident Nation: <%= @club.nation %></p><br>
-<p>League Division: <%= @club.league_division %></p>
+<p>League/Division: <%= @club.league_division %></p>
 
 <%= link_to "Edit: #{@club.name}", edit_user_club_path(@club.user, @club) %>
 
 <%= form_tag ({controller: "clubs", action: "destroy", method: "delete"}) do %>
 <%= submit_tag "Delete Club" %>
 <% end %>
-<br><label>Current Players: </label><br>
-<% if @club.players.length > 0 %>
-<% @club.players.each do |player| %>
-<%= link_to "#{player.name}", user_player_path(player.user, player) %><br>
-<% end %>
-<% end %>
+
+<br><%= link_to "Your Home Page", user_path(User.find_by_id(session[:user_id])) %>

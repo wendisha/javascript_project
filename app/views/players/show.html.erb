@@ -1,6 +1,9 @@
 <h1><%= @player.name %></h1>
 <p>Country of Origin: <%= @player.country_of_origin %></p>
 <p>Position: <%= @player.position %></p>
+<p>Club: <%= @player.club.name %></p>
+<p>Agent: <%= @player.agent.name %></p>
+
 
 <%= link_to "Edit: #{@player.name}", edit_user_player_path(@player.user, @player) %>
 
@@ -12,6 +15,8 @@
 <% if @player.contracts.length > 0 %>
 <% counter = 1 %>
 <% @player.contracts.each do |contract| %>
-<%= link_to "Player Contract #{counter}", user_player_path(player.user, player) %>
+<%= link_to "Player Contract #{counter}: #{contract.status}", user_contract_path(contract.user, contract) %>
 <% end %>
 <% end %>
+
+<br><%= link_to "Your Home Page", user_path(User.find_by_id(session[:user_id])) %>

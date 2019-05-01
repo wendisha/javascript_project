@@ -5,3 +5,5 @@
 <%= link_to "#{club.name}", user_club_path(club.user, club) %><br>
 <% end %>
 <% end %>
+<br>
+<%= link_to "Create a New Club", new_user_club_path(User.find_by_id(session[:user_id])) %>

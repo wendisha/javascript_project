@@ -14,10 +14,10 @@
 <%= text_field_tag "player[position]" %><br>
 
 <label>Agent:</label>
-<%= collection_select :player, :agent_id, Agent.all, :id, :name %><br>
+<%= collection_select :player, :agent_id, Agent.where(user_id: session[:user_id]), :id, :name %><br>
 
 <label>Club:</label>
-<%= collection_select :player, :club_id, Club.all, :id, :name %><br>
+<%= collection_select :player, :club_id, Club.where(user_id: session[:user_id]), :id, :name %><br>
 
 <%= hidden_field_tag "player[user_id]", @user_id %><br>
 

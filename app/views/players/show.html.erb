@@ -15,8 +15,15 @@
 <% if @player.contracts.length > 0 %>
 <% counter = 1 %>
 <% @player.contracts.each do |contract| %>
-<%= link_to "Contract #{counter}: #{contract.status}", user_contract_path(contract.user, contract) %>
+<%= link_to "Contract #{counter}: with #{contract.club.name}: #{contract.status}", user_contract_path(contract.user, contract) %><br>
+<% counter += 1 %>
 <% end %>
 <% end %>
 <br>
+<% @player.contract_status_accurate? %>
+<% if @player.errors.messages %>
+<% @player.errors.messages.each do |message| %>
+<%= message[1][0] %>
+<% end %>
+<% end %><br>
 <br><%= link_to "Your Home Page", user_path(User.find_by_id(session[:user_id])) %>

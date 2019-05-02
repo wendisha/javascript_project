@@ -3,7 +3,7 @@ class ContractsController < ApplicationController
   def index
     if_not_logged_in
     not_your_page_user_id_v
-    @contracts = Contract.find_by(user_id: session[:user_id])
+    @contracts = Contract.where(user_id: session[:user_id])
   end
 
   def show

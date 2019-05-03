@@ -46,11 +46,11 @@ class AgentsController < ApplicationController
 
   def update
     if params[:agent][:name].empty?
-      redirect_to edit_user_agent_path(User.find_by_id(params[:user_id]), Agent.find_by_id(params[:id]), error_message: "an agent must have a name")
-    elsif Agent.find_by(user_id: params[:agent][:user_id], name: params[:agent][:name]).count > 1
-      redirect_to edit_user_agent_path(User.find_by_id(params[:user_id]), Agent.find_by_id(params[:id]), error_message: "you have another agent by that name")
+      redirect_to edit_user_agent_path(User.find_by_id(params[:agent][:user_id]), Agent.find_by_id(params[:agent][:id]), error_message: "an agent must have a name")
+    elsif Agent.where(user_id: params[:agent][:user_id], name: params[:agent][:name]).count > 1
+      redirect_to edit_user_agent_path(User.find_by_id(params[:agent][:user_id]), Agent.find_by_id(params[:agent][:id]), error_message: "you have another agent by that name")
     else
-      @agent = Agent.find_by(user_id: params[:agent][:user_id], name: params[:agent][:name])
+      @agent = Agent.find_by(user_id: params[:agent][:user_id], id: params[:agent][:id])
       @agent.update(agent_params)
       redirect_to user_agent_path(@agent.user, @agent)
     end

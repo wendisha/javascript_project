@@ -9,9 +9,10 @@ class Player < ActiveRecord::Base
   validates :name, presence: true
   validate :contract_status_accurate?
 
+
   def contract_status_accurate?
     if !self.contracts.nil?
-      if self.contracts.where(status: "in effect").count > 1
+      if Contract.in_effect.where(player: self).count > 1
         errors.add(:title, "for this player, the contract statuses are inaccurate. each player must have at most one contract that is in effect")
       end
     end

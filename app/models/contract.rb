@@ -11,6 +11,8 @@ class Contract < ActiveRecord::Base
   validate :status_terminology
   validates :user_id, presence: true
 
+  scope :in_effect, -> { where(status: "in effect") }
+
   def status_terminology
     if self.status != "in the works" && self.status != "pending" && self.status != "in effect" && self.status != "completed" && self.status != "terminated early" && self.status != "dead"
       errors.add(:title, "contract status must adhere to status terminology")

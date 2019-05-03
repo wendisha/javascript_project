@@ -20,7 +20,7 @@
 <% end %>
 <% end %>
 <br>
-<% @player.contract_status_accurate? %>
+<% @player.save %>
 <% if @player.errors.messages %>
 <% @player.errors.messages.each do |message| %>
 <%= message[1][0] %>

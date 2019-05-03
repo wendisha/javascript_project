@@ -42,15 +42,16 @@ class ContractsController < ApplicationController
     end
     if_error
     @contract = Contract.find_by_id(params[:id])
+    @user_id = session[:user_id]
   end
 
   def update
     if params[:contract][:player_id].empty? || params[:contract][:agent_id].empty? || params[:contract][:club_id].empty? || params[:contract][:status].empty?
       redirect_to edit_user_contract_path(error_message: "a contract must have a player, an agent, a club and a status")
-    elsif Contract.find_by(player_id: params[:contract][:player_id], club_id: params[:contract][:club_id])
+    elsif Contract.where(user_id: params[:contract][:user_id], player_id: params[:contract][:player_id], club_id: params[:contract][:club_id]).count > 1
       redirect_to edit_user_contract_path(error_message: "you already have a contract between that player and that club")
     else
-      @contract = Contract.find_by(user_id: params[:user_id], player_id: params[:player_id], club_id: params[:club_id])
+      @contract = Contract.find_by(user_id: params[:contract][:user_id], player_id: params[:contract][:player_id], club_id: params[:contract][:club_id])
       Contract.update(contract_params)
       redirect_to user_contract_path(@contract.user, @contract)
     end

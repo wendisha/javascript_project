@@ -1,8 +1,10 @@
-<h2>Edit Contract</h2><br>
+<h2>Edit Contract Between <%= @contract.player.name %> & <%= @contract.club.name %></h2><br>
 
 <%= render 'error' %>
 
-<%= form_tag ({controller: "contracts", action: "update", method: "post"}) do %>
+<%= form_tag ({controller: "contracts", action: "update", method: "patch"}) do %>
+<input type="hidden" name="_method" value="patch" />
+<%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) %>
 
 <label>Length:</label>
 <%= text_field_tag "contract[length]", @contract.length %><br>
@@ -19,16 +21,16 @@
 <label>Status:</label>
 <%= collection_select :contract, :status, Status.all, :wording, :wording %><br>
 
-<label>Player:</label>
-<%= collection_select :contract, :player_id, Player.where(user_id: session[:user_id]), :id, :name %><br>
+<%= hidden_field_tag "contract[player_id]", @contract.player_id %>
 
-<label>Club:</label>
-<%= collection_select :contract, :club_id, Club.where(user_id: session[:user_id]), :id, :name %><br>
+<%= hidden_field_tag "contract[club_id]", @contract.club_id %>
 
 <label>Agent:</label>
 <%= collection_select :contract, :agent_id, Agent.where(user_id: session[:user_id]), :id, :name %><br>
 
 <%= hidden_field_tag "contract[user_id]", @user_id %><br>
+
+<%= hidden_field_tag "contract[id]", @contract.id %><br>
 
 <%= submit_tag "Update Contract" %>
 <% end %>

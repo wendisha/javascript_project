@@ -58,6 +58,9 @@ class ContractsController < ApplicationController
   end
 
   def destroy
+    @contract = Contract.find_by(user_id: params[:user_id], id: params[:id])
+    @contract.delete
+    redirect_to user_contracts_path(User.find_by_id(session[:user_id]))
   end
 
   def contract_params

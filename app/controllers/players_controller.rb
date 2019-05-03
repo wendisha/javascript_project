@@ -57,6 +57,9 @@ class PlayersController < ApplicationController
   end
 
   def destroy
+    @player = Player.find_by(user_id: params[:user_id], id: params[:id])
+    @player.delete
+    redirect_to user_players_path(User.find_by_id(session[:user_id]))
   end
 
   def player_params

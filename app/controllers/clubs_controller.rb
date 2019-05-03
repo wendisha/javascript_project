@@ -58,6 +58,9 @@ class ClubsController < ApplicationController
   end
 
   def destroy
+    @club = Club.find_by(user_id: params[:user_id], id: params[:id])
+    @club.delete
+    redirect_to user_clubs_path(User.find_by_id(session[:user_id]))
   end
 
   def club_params

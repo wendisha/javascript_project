@@ -57,7 +57,9 @@ class AgentsController < ApplicationController
   end
 
   def destroy
-
+    @agent = Agent.find_by(user_id: params[:user_id], id: params[:id])
+    @agent.delete
+    redirect_to user_agents_path(User.find_by_id(session[:user_id]))
   end
 
   def agent_params

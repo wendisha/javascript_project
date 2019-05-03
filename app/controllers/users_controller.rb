@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
   def create
     if params[:user][:name].empty? || params[:user][:password].empty?
-      redirect_to new_user_path(error_message: "please enter a username and a password")
+      redirect_to new_user_path(error_message: "please enter both a username and a password")
     elsif !User.find_by(name: params[:user][:name])
       @user = User.create(name: params[:user][:name], password: params[:user][:password])
       session[:user_id] = @user.id

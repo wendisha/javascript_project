@@ -24,7 +24,11 @@ class ContractsController < ApplicationController
   end
 
   def create
-    if params[:contract][:player_id].empty? || params[:contract][:agent_id].empty? || params[:contract][:club_id].empty? || params[:contract][:status].empty?
+    if !Player.find_by_id(params[:contract][:player_id]).contracts.empty?
+      if Player.find_by_id(params[:contract][:player_id]).contracts.in_effect > 0 && params[:contract][:status] == "in effect"
+        redirect_to new_user_contract_path(error_message: "each player can only have one contract in effect at a time. please change the status of the previously in effect contract before adding a new in effect contract")
+      end
+    elsif params[:contract][:player_id].empty? || params[:contract][:agent_id].empty? || params[:contract][:club_id].empty? || params[:contract][:status].empty?
       redirect_to new_user_contract_path(error_message: "a contract must have a player, an agent, a club and a status")
     elsif Contract.find_by(player_id: params[:contract][:player_id], club_id: params[:contract][:club_id])
       redirect_to new_user_contract_path(error_message: "you already have a contract between that player and that club")

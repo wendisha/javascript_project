@@ -1,5 +1,5 @@
 # User.create(name: "dfs", password: "dfs")
-#
+
 # Agent.create(user_id: 1, name: "LookAtMe", country_of_origin: "selfland")
 # Agent.create(user_id: 1, name: "LookAtMyClient", country_of_origin: "humbleland")
 #

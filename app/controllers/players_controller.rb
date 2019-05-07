@@ -57,8 +57,10 @@ class PlayersController < ApplicationController
       redirect_to edit_user_player_path(User.find_by_id(params[:player][:user_id]), Player.find_by_id(params[:player][:id]), error_message: "a player must have a name, an agent, and a club")
     elsif params[:player][:name].empty? || params[:player][:agent_id].empty? || params[:player][:club_id].empty?
       redirect_to edit_user_player_path(User.find_by_id(params[:player][:user_id]), Player.find_by_id(params[:player][:id]), error_message: "a player must have a name, an agent, and a club")
-    elsif Player.where(user_id: params[:player][:user_id], name: params[:player][:name]).count > 1
-      redirect_to edit_user_player_path(User.find_by_id(params[:player][:user_id]), Player.find_by_id(params[:player][:id]), error_message: "you have another player by that name")
+    elsif params[:player][:name] != Player.find_by_id(params[:player][:id]).name
+      if Player.find_by(user_id: params[:player][:user_id], name: params[:player][:name])
+        redirect_to edit_user_player_path(User.find_by_id(params[:player][:user_id]), Player.find_by_id(params[:player][:id]), error_message: "you have another player by that name")
+      end
     else
       @player = Player.find_by(user_id: params[:player][:user_id], id: params[:player][:id])
       @player.update(player_params)

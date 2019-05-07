@@ -48,8 +48,10 @@ class ClubsController < ApplicationController
   def update
     if params[:club][:name].empty? || params[:club][:city].empty? || params[:club][:nation].empty? || params[:club][:league_division].empty?
       redirect_to edit_user_club_path(User.find_by_id(params[:club][:user_id]), Club.find_by_id(params[:club][:id]), error_message: "a club must have a name, city, nation and league/division")
-    elsif Club.where(user_id: params[:club][:user_id], name: params[:club][:name]).count > 1
-      redirect_to edit_user_club_path(User.find_by_id(params[:club][:user_id]), Club.find_by_id(params[:club][:id]), error_message: "you have another club by that name")
+    elsif params[:club][:name] != Club.find_by_id(params[:club][:id]).name
+      if Club.find_by(user_id: params[:club][:user_id], name: params[:club][:name])
+        redirect_to edit_user_club_path(User.find_by_id(params[:club][:user_id]), Club.find_by_id(params[:club][:id]), error_message: "you have another club by that name")
+      end 
     else
       @club = Club.find_by(user_id: params[:club][:user_id], id: params[:club][:id])
       @club.update(club_params)

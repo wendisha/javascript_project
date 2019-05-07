@@ -7,12 +7,18 @@ class PlayersController < ApplicationController
   end
 
   def show
+    binding.pry
     if_not_logged_in
     not_your_page_user_id_v
-    if session[:user_id] != Player.find_by_id(params[:id]).user.id
-      redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your data")
+    if Player.find_by(id: params[:id]) && session[:user_id] == params[:user_id].to_i
+      if session[:user_id] != Player.find_by_id(params[:id]).user.id
+        redirect_to user_path(error_message: "that is not your data")
+      else
+        @player = Player.find_by_id(params[:id])
+      end
+    elsif !Player.find_by_id(params[:id]) && session[:user_id] == params[:user_id].to_i
+      redirect_to user_path(error_message: "there is not a player with that id")
     end
-    @player = Player.find_by_id(params[:id])
   end
 
   def new
@@ -24,7 +30,9 @@ class PlayersController < ApplicationController
   end
 
   def create
-    if params[:player][:name].empty? || params[:player][:agent_id].empty? || params[:player][:club_id].empty?
+    if params[:player][:name].nil? || params[:player][:agent_id].nil? || params[:player][:club_id].nil?
+      redirect_to new_user_player_path(error_message: "a player must have a name, an agent and a club")
+    elsif params[:player][:name].empty? || params[:player][:agent_id].empty? || params[:player][:club_id].empty?
       redirect_to new_user_player_path(error_message: "a player must have a name, an agent and a club")
     elsif Player.find_by(user_id: params[:player][:user_id], name: params[:player][:name])
       redirect_to new_user_player_path(error_message: "you already have a player by that name")
@@ -45,8 +53,10 @@ class PlayersController < ApplicationController
   end
 
   def update
-    if params[:player][:name].empty? || params[:player][:agent_id].empty? || params[:player][:club_id].empty?
-      redirect_to edit_user_player_path(User.find_by_id(params[:player][:user_id]), Player.find_by_id(params[:player][:id]), error_message: "a player must have a name")
+    if params[:player][:name].nil? || params[:player][:agent_id].nil? || params[:player][:club_id].nil?
+      redirect_to edit_user_player_path(User.find_by_id(params[:player][:user_id]), Player.find_by_id(params[:player][:id]), error_message: "a player must have a name, an agent, and a club")
+    elsif params[:player][:name].empty? || params[:player][:agent_id].empty? || params[:player][:club_id].empty?
+      redirect_to edit_user_player_path(User.find_by_id(params[:player][:user_id]), Player.find_by_id(params[:player][:id]), error_message: "a player must have a name, an agent, and a club")
     elsif Player.where(user_id: params[:player][:user_id], name: params[:player][:name]).count > 1
       redirect_to edit_user_player_path(User.find_by_id(params[:player][:user_id]), Player.find_by_id(params[:player][:id]), error_message: "you have another player by that name")
     else

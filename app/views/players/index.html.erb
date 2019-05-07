@@ -2,7 +2,7 @@
 
 <% if !@players.nil? %>
 <% @players.all.each do |player| %>
-<% if contract.valid? %>
+<% if player.valid? %>
 <%= link_to "#{player.name}", user_player_path(player.user, player) %><br>
 <% end %>
 <% end %>

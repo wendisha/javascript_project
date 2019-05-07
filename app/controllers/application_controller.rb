@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   end
 
   def not_your_page_user_id_v
+    #binding.pry
     if session[:user_id] != params[:user_id].to_i
       redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your page")
     end

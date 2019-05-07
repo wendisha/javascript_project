@@ -24,14 +24,18 @@ class ContractsController < ApplicationController
   end
 
   def create
-    if !Player.find_by_id(params[:contract][:player_id]).contracts.empty?
-      if Player.find_by_id(params[:contract][:player_id]).contracts.in_effect > 0 && params[:contract][:status] == "in effect"
-        redirect_to new_user_contract_path(error_message: "each player can only have one contract in effect at a time. please change the status of the previously in effect contract before adding a new in effect contract")
+    if !Player.find_by_id(params[:contract][:player_id]).contracts.nil?
+      if !Player.find_by_id(params[:contract][:player_id]).contracts.empty?
+        if Player.find_by_id(params[:contract][:player_id]).contracts.in_effect.count > 0 && params[:contract][:status] == "in effect"
+          redirect_to new_user_contract_path(User.find_by_id(session[:user_id]), error_message: "each player can only have one contract in effect at a time. please change the status of the previously in effect contract before adding a new in effect contract") and return
+        end
       end
+    end
+
+    if params[:contract][:player_id].nil? || params[:contract][:agent_id].nil? || params[:contract][:club_id].nil? || params[:contract][:status].nil?
+      redirect_to new_user_contract_path(error_message: "a contract must have a player, an agent, a club and a status")
     elsif params[:contract][:player_id].empty? || params[:contract][:agent_id].empty? || params[:contract][:club_id].empty? || params[:contract][:status].empty?
       redirect_to new_user_contract_path(error_message: "a contract must have a player, an agent, a club and a status")
-    elsif Contract.find_by(player_id: params[:contract][:player_id], club_id: params[:contract][:club_id])
-      redirect_to new_user_contract_path(error_message: "you already have a contract between that player and that club")
     else
       @contract = Contract.create(contract_params)
       redirect_to user_contract_path(@contract.user, @contract)
@@ -50,13 +54,25 @@ class ContractsController < ApplicationController
   end
 
   def update
-    if params[:contract][:player_id].empty? || params[:contract][:agent_id].empty? || params[:contract][:club_id].empty? || params[:contract][:status].empty?
+    if !Player.find_by_id(params[:contract][:player_id]).contracts.nil?
+      if !Player.find_by_id(params[:contract][:player_id]).contracts.empty?
+        if Contract.find_by_id(params[:contract][:id]).status != params[:contract][:status]
+          if Contract.find_by_id(params[:contract][:id]).status == "in effect"
+
+          elsif Player.find_by_id(params[:contract][:player_id]).contracts.in_effect.count > 0 && params[:contract][:status] == "in effect"
+            redirect_to edit_user_contract_path(error_message: "each player can only have one contract in effect at a time. please change the status of the previously in effect contract before adding a new in effect contract") and return
+          end
+        end
+      end
+    end
+
+    if params[:contract][:player_id].nil? || params[:contract][:agent_id].nil? || params[:contract][:club_id].nil? || params[:contract][:status].nil?
       redirect_to edit_user_contract_path(error_message: "a contract must have a player, an agent, a club and a status")
-    elsif Contract.where(user_id: params[:contract][:user_id], player_id: params[:contract][:player_id], club_id: params[:contract][:club_id]).count > 1
-      redirect_to edit_user_contract_path(error_message: "you already have a contract between that player and that club")
+    elsif params[:contract][:player_id].empty? || params[:contract][:agent_id].empty? || params[:contract][:club_id].empty? || params[:contract][:status].empty?
+      redirect_to edit_user_contract_path(error_message: "a contract must have a player, an agent, a club and a status")
     else
-      @contract = Contract.find_by(user_id: params[:contract][:user_id], player_id: params[:contract][:player_id], club_id: params[:contract][:club_id])
-      Contract.update(contract_params)
+      @contract = Contract.find_by_id(params[:contract][:id])
+      @contract.update(contract_params)
       redirect_to user_contract_path(@contract.user, @contract)
     end
   end

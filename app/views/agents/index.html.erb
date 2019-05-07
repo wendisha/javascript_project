@@ -2,7 +2,7 @@
 
 <% if !@agents.nil? %>
 <% @agents.each do |agent| %>
-<% if contract.valid? %>
+<% if agent.valid? %>
 <%= link_to "#{agent.name}", user_agent_path(agent.user, agent) %><br>
 <% end %>
 <% end %>

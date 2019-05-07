@@ -25,9 +25,9 @@ class AgentsController < ApplicationController
 
   def create
     if params[:agent][:name].empty?
-      redirect_to new_user_agent_path(error_message: "an agent must have a name")
+      redirect_to new_user_agent_path(User.find_by_id(session[:user_id]), error_message: "an agent must have a name")
     elsif Agent.find_by(user_id: params[:agent][:user_id], name: params[:agent][:name])
-      redirect_to new_user_agent_path(error_message: "you already have an agent by that name")
+      redirect_to new_user_agent_path(User.find_by_id(session[:user_id]), error_message: "you already have an agent by that name")
     else
       @agent = Agent.create(agent_params)
       redirect_to user_agent_path(@agent.user, @agent)

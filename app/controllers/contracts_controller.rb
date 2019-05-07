@@ -33,9 +33,9 @@ class ContractsController < ApplicationController
     end
 
     if params[:contract][:player_id].nil? || params[:contract][:agent_id].nil? || params[:contract][:club_id].nil? || params[:contract][:status].nil?
-      redirect_to new_user_contract_path(error_message: "a contract must have a player, an agent, a club and a status")
+      redirect_to new_user_contract_path(User.find_by_id(session[:user_id]), error_message: "a contract must have a player, an agent, a club and a status")
     elsif params[:contract][:player_id].empty? || params[:contract][:agent_id].empty? || params[:contract][:club_id].empty? || params[:contract][:status].empty?
-      redirect_to new_user_contract_path(error_message: "a contract must have a player, an agent, a club and a status")
+      redirect_to new_user_contract_path(User.find_by_id(session[:user_id]), error_message: "a contract must have a player, an agent, a club and a status")
     else
       @contract = Contract.create(contract_params)
       redirect_to user_contract_path(@contract.user, @contract)
@@ -60,16 +60,16 @@ class ContractsController < ApplicationController
           if Contract.find_by_id(params[:contract][:id]).status == "in effect"
 
           elsif Player.find_by_id(params[:contract][:player_id]).contracts.in_effect.count > 0 && params[:contract][:status] == "in effect"
-            redirect_to edit_user_contract_path(error_message: "each player can only have one contract in effect at a time. please change the status of the previously in effect contract before adding a new in effect contract") and return
+            redirect_to edit_user_contract_path(User.find_by_id(session[:user_id]), Contract.find_by_id(params[:contract][:id]), error_message: "each player can only have one contract in effect at a time. please change the status of the previously in effect contract before adding a new in effect contract") and return
           end
         end
       end
     end
 
     if params[:contract][:player_id].nil? || params[:contract][:agent_id].nil? || params[:contract][:club_id].nil? || params[:contract][:status].nil?
-      redirect_to edit_user_contract_path(error_message: "a contract must have a player, an agent, a club and a status")
+      redirect_to edit_user_contract_path(User.find_by_id(session[:user_id]), Contract.find_by_id(params[:contract][:id]), error_message: "a contract must have a player, an agent, a club and a status")
     elsif params[:contract][:player_id].empty? || params[:contract][:agent_id].empty? || params[:contract][:club_id].empty? || params[:contract][:status].empty?
-      redirect_to edit_user_contract_path(error_message: "a contract must have a player, an agent, a club and a status")
+      redirect_to edit_user_contract_path(User.find_by_id(session[:user_id]), Contract.find_by_id(params[:contract][:id]), error_message: "a contract must have a player, an agent, a club and a status")
     else
       @contract = Contract.find_by_id(params[:contract][:id])
       @contract.update(contract_params)

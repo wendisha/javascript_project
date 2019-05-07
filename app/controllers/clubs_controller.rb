@@ -26,9 +26,9 @@ class ClubsController < ApplicationController
 
   def create
     if params[:club][:name].empty? || params[:club][:city].empty? || params[:club][:nation].empty? || params[:club][:league_division].empty?
-      redirect_to new_user_club_path(error_message: "a club must have a name, city, nation, and league/division")
+      redirect_to new_user_club_path(User.find_by_id(session[:user_id]), error_message: "a club must have a name, city, nation, and league/division")
     elsif Club.find_by(user_id: params[:club][:user_id], name: params[:club][:name])
-      redirect_to new_user_club_path(error_message: "you already have a club by that name")
+      redirect_to new_user_club_path(User.find_by_id(session[:user_id]), error_message: "you already have a club by that name")
     else
       @club = Club.create(club_params)
       redirect_to user_club_path(@club.user, @club)

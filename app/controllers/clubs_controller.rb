@@ -51,7 +51,11 @@ class ClubsController < ApplicationController
     elsif params[:club][:name] != Club.find_by_id(params[:club][:id]).name
       if Club.find_by(user_id: params[:club][:user_id], name: params[:club][:name])
         redirect_to edit_user_club_path(User.find_by_id(params[:club][:user_id]), Club.find_by_id(params[:club][:id]), error_message: "you have another club by that name")
-      end 
+      else
+        @club = Club.find_by(user_id: params[:club][:user_id], id: params[:club][:id])
+        @club.update(club_params)
+        redirect_to user_club_path(@club.user, @club)
+      end
     else
       @club = Club.find_by(user_id: params[:club][:user_id], id: params[:club][:id])
       @club.update(club_params)

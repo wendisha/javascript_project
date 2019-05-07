@@ -60,6 +60,10 @@ class PlayersController < ApplicationController
     elsif params[:player][:name] != Player.find_by_id(params[:player][:id]).name
       if Player.find_by(user_id: params[:player][:user_id], name: params[:player][:name])
         redirect_to edit_user_player_path(User.find_by_id(params[:player][:user_id]), Player.find_by_id(params[:player][:id]), error_message: "you have another player by that name")
+      else
+        @player = Player.find_by(user_id: params[:player][:user_id], id: params[:player][:id])
+        @player.update(player_params)
+        redirect_to user_player_path(@player.user, @player)
       end
     else
       @player = Player.find_by(user_id: params[:player][:user_id], id: params[:player][:id])

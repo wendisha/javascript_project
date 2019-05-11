@@ -1,15 +1,12 @@
 class PlayersController < ApplicationController
 
   def index
-    if_not_logged_in
-    not_your_page_user_id_v
+    authorization
     @players = Player.where(user_id: session[:user_id])
   end
 
   def show
-
-    if_not_logged_in
-    not_your_page_user_id_v
+    authorization
     if Player.find_by(id: params[:id]) && session[:user_id] == params[:user_id].to_i
       if session[:user_id] != Player.find_by_id(params[:id]).user.id
         redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your data")
@@ -22,29 +19,21 @@ class PlayersController < ApplicationController
   end
 
   def new
-    if_not_logged_in
-    not_your_page_user_id_v
-    if_error
+    authorization
     @player = Player.new
-    @user_id = params[:user_id]
   end
 
   def create
-    if params[:player][:name].nil? || params[:player][:agent_id].nil? || params[:player][:club_id].nil?
-      redirect_to new_user_player_path(User.find_by_id(session[:user_id]), error_message: "a player must have a name, an agent and a club")
-    elsif params[:player][:name].empty? || params[:player][:agent_id].empty? || params[:player][:club_id].empty?
-      redirect_to new_user_player_path(User.find_by_id(session[:user_id]), error_message: "a player must have a name, an agent and a club")
-    elsif Player.find_by(user_id: params[:player][:user_id], name: params[:player][:name])
-      redirect_to new_user_player_path(User.find_by_id(session[:user_id]), error_message: "you already have a player by that name")
-    else
-      @player = Player.create(player_params)
-      redirect_to user_player_path(@player.user, @player)
-    end
+      @player = Player.new(player_params)
+      if @player.save
+        redirect_to user_player_path(@player.user, @player)
+      else
+        render 'players/new'
+      end
   end
 
   def edit
-    if_not_logged_in
-    not_your_page_user_id_v
+    authorization
     if session[:user_id] != Player.find_by_id(params[:id]).user.id
       redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your data")
     end

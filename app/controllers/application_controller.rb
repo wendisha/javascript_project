@@ -1,6 +1,11 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+  def authorization
+    if_not_logged_in
+    not_your_page_user_id_v
+  end
+
   def if_not_logged_in
     if session[:user_id].nil?
       redirect_to login_path(error_message: "please log in")
@@ -14,7 +19,6 @@ class ApplicationController < ActionController::Base
   end
 
   def not_your_page_user_id_v
-    #binding.pry
     if session[:user_id] != params[:user_id].to_i
       redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your page")
     end

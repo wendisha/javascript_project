@@ -16,7 +16,7 @@
 <label>League/Division:</label>
 <%= text_field_tag "club[league_division]" %><br>
 
-<%= hidden_field_tag "club[user_id]", @user_id %><br>
+<%= hidden_field_tag "club[user_id]", session[:user_id] %><br>
 
 <%= submit_tag "Create Club" %>
 <% end %>

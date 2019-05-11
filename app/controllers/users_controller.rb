@@ -2,19 +2,16 @@ class UsersController < ApplicationController
 
   def new
     already_logged_in
-    if_error
     @user = User.new
   end
 
   def create
-    if params[:user][:name].empty? || params[:user][:password].empty?
-      redirect_to new_user_path(error_message: "please enter both a username and a password")
-    elsif !User.find_by(name: params[:user][:name])
-      @user = User.create(name: params[:user][:name], password: params[:user][:password])
+    @user = User.new(name: params[:user][:name], password: params[:user][:password])
+    if @user.save
       session[:user_id] = @user.id
       redirect_to user_path(@user)
     else
-      redirect_to new_user_path(error_message: "please select a different user name. that one is already in use")
+      render 'users/new'
     end
   end
 
@@ -24,6 +21,4 @@ class UsersController < ApplicationController
     if_error
     @user = User.find_by_id(params[:id])
   end
-
-
 end

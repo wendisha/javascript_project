@@ -1,14 +1,12 @@
 class ContractsController < ApplicationController
 
   def index
-    if_not_logged_in
-    not_your_page_user_id_v
+    authorization
     @contracts = Contract.where(user_id: session[:user_id])
   end
 
   def show
-    if_not_logged_in
-    not_your_page_user_id_v
+    authorization
     if session[:user_id] != Contract.find_by_id(params[:id]).user.id
       redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your data")
     end
@@ -16,35 +14,22 @@ class ContractsController < ApplicationController
   end
 
   def new
-    if_not_logged_in
-    not_your_page_user_id_v
-    if_error
+    authorization
     @contract = Contract.new
-    @user_id = session[:user_id]
   end
 
   def create
-    if !Player.find_by_id(params[:contract][:player_id]).contracts.nil?
-      if !Player.find_by_id(params[:contract][:player_id]).contracts.empty?
-        if Player.find_by_id(params[:contract][:player_id]).contracts.in_effect.count > 0 && params[:contract][:status] == "in effect"
-          redirect_to new_user_contract_path(User.find_by_id(session[:user_id]), error_message: "each player can only have one contract in effect at a time. please change the status of the previously in effect contract before adding a new in effect contract") and return
-        end
-      end
-    end
-
-    if params[:contract][:player_id].nil? || params[:contract][:agent_id].nil? || params[:contract][:club_id].nil? || params[:contract][:status].nil?
-      redirect_to new_user_contract_path(User.find_by_id(session[:user_id]), error_message: "a contract must have a player, an agent, a club and a status")
-    elsif params[:contract][:player_id].empty? || params[:contract][:agent_id].empty? || params[:contract][:club_id].empty? || params[:contract][:status].empty?
-      redirect_to new_user_contract_path(User.find_by_id(session[:user_id]), error_message: "a contract must have a player, an agent, a club and a status")
-    else
-      @contract = Contract.create(contract_params)
+    @contract = Contract.new(contract_params)
+    binding.pry
+    if @contract.save
       redirect_to user_contract_path(@contract.user, @contract)
+    else
+      render 'contracts/new'
     end
   end
 
   def edit
-    if_not_logged_in
-    not_your_page_user_id_v
+    authorization
     if session[:user_id] != Contract.find_by_id(params[:id]).user.id
       redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your data")
     end

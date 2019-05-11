@@ -8,6 +8,5 @@ class Club < ActiveRecord::Base
   validates :city, presence: true
   validates :nation, presence: true
   validates :league_division, presence: true
-  validates :user_id, presence: true
-
+  validates_uniqueness_of :name, :scope => :user_id
 end

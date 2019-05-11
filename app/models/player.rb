@@ -5,17 +5,7 @@ class Player < ActiveRecord::Base
   belongs_to :user
   has_many :contracts
 
-  validates :user_id, presence: true
   validates :name, presence: true
-  validate :contract_status_accurate?
-
-
-  def contract_status_accurate?
-    if !self.contracts.nil?
-      if Contract.in_effect.where(player: self).count > 1
-        errors.add(:title, "for this player, the contract statuses are inaccurate. each player must have at most one contract that is in effect")
-      end
-    end
-  end
+  validates_uniqueness_of :name, :scope => :user_id
 
 end

@@ -4,6 +4,8 @@
 <% @contracts.each do |contract| %>
 <% if contract.valid? %>
 <%= link_to "#{contract.player.name} & #{contract.club.name}", user_contract_path(contract.user, contract) %><br>
+<% else %>
+<%= link_to "Your data for this contract is currently invalid", user_contract_path(contract.user, contract) %><br>
 <% end %>
 <% end %>
 <% end %>

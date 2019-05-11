@@ -1,6 +1,9 @@
 <% if @error_message %>
 <p><%= "#{@error_message}" %></p><br>
 <% end %>
+<% if @user.errors.full_messages.each do |e| %>
+<p><%= e %></p>
+<% end %>
 <%= form_for(@user) do |f| %>
 
 <%= f.label "Name" %>

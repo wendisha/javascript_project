@@ -1,14 +1,12 @@
 class AgentsController < ApplicationController
 
   def index
-    if_not_logged_in
-    not_your_page_user_id_v
+    authorization
     @agents = Agent.where(user_id: session[:user_id])
   end
 
   def show
-    if_not_logged_in
-    not_your_page_user_id_v
+    authorization
     if session[:user_id] != Agent.find_by_id(params[:id]).user.id
       redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your data")
     end
@@ -16,27 +14,21 @@ class AgentsController < ApplicationController
   end
 
   def new
-    if_not_logged_in
-    not_your_page_user_id_v
-    if_error
+    authorization
     @agent = Agent.new
-    @user_id = params[:user_id]
   end
 
   def create
-    if params[:agent][:name].empty?
-      redirect_to new_user_agent_path(User.find_by_id(session[:user_id]), error_message: "an agent must have a name")
-    elsif Agent.find_by(user_id: params[:agent][:user_id], name: params[:agent][:name])
-      redirect_to new_user_agent_path(User.find_by_id(session[:user_id]), error_message: "you already have an agent by that name")
-    else
-      @agent = Agent.create(agent_params)
+    @agent = Agent.new(agent_params)
+    if @agent.save
       redirect_to user_agent_path(@agent.user, @agent)
+    else
+      render 'agents/new'
     end
   end
 
   def edit
-    if_not_logged_in
-    not_your_page_user_id_v
+    authorization
     if session[:user_id] != Agent.find_by_id(params[:id]).user.id
       redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your data")
     end

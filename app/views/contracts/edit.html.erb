@@ -1,6 +1,16 @@
-<h2>Edit Contract Between <%= @contract.player.name %> & <%= @contract.club.name %></h2><br>
 
+<% if @contract.valid? %>
+<h2>Edit Contract Between <%= @contract.player.name %> & <%= @contract.club.name %></h2><br>
 <%= render 'error' %>
+<% else %>
+<%= render 'error' %>
+<p>Data is needed below to make this contract valid</p>
+<label>Player:</label>
+<%= collection_select :contract, :player_id, Player.where(user_id: session[:user_id]), :id, :name, {:include_blank => 'none'} %><br>
+
+<label>Club:</label>
+<%= collection_select :contract, :club_id, Club.where(user_id: session[:user_id]), :id, :name, {:include_blank => 'none'} %><br>
+<% end %>
 
 <%= form_tag ({controller: "contracts", action: "update", method: "patch"}) do %>
 <input type="hidden" name="_method" value="patch" />
@@ -26,7 +36,7 @@
 <%= hidden_field_tag "contract[club_id]", @contract.club_id %>
 
 <label>Agent:</label>
-<%= collection_select :contract, :agent_id, Agent.where(user_id: session[:user_id]), :id, :name %><br>
+<%= collection_select :contract, :agent_id, Agent.where(user_id: session[:user_id]), :id, :name, {:include_blank => 'none'} %><br>
 
 <%= hidden_field_tag "contract[user_id]", @user_id %><br>
 

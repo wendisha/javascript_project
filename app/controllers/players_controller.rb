@@ -7,15 +7,10 @@ class PlayersController < ApplicationController
 
   def show
     authorization
-    if Player.find_by(id: params[:id]) && session[:user_id] == params[:user_id].to_i
-      if session[:user_id] != Player.find_by_id(params[:id]).user.id
-        redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your data")
-      else
-        @player = Player.find_by_id(params[:id])
-      end
-    elsif !Player.find_by_id(params[:id]) && session[:user_id] == params[:user_id].to_i
-      redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "there is not a player with that id")
+    if session[:user_id] != Player.find_by_id(params[:id]).user.id
+      redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your data")
     end
+    @player = Player.find_by_id(params[:id])
   end
 
   def new
@@ -42,22 +37,11 @@ class PlayersController < ApplicationController
   end
 
   def update
-    if params[:player][:name].nil? || params[:player][:agent_id].nil? || params[:player][:club_id].nil?
-      redirect_to edit_user_player_path(User.find_by_id(params[:player][:user_id]), Player.find_by_id(params[:player][:id]), error_message: "a player must have a name, an agent, and a club")
-    elsif params[:player][:name].empty? || params[:player][:agent_id].empty? || params[:player][:club_id].empty?
-      redirect_to edit_user_player_path(User.find_by_id(params[:player][:user_id]), Player.find_by_id(params[:player][:id]), error_message: "a player must have a name, an agent, and a club")
-    elsif params[:player][:name] != Player.find_by_id(params[:player][:id]).name
-      if Player.find_by(user_id: params[:player][:user_id], name: params[:player][:name])
-        redirect_to edit_user_player_path(User.find_by_id(params[:player][:user_id]), Player.find_by_id(params[:player][:id]), error_message: "you have another player by that name")
-      else
-        @player = Player.find_by(user_id: params[:player][:user_id], id: params[:player][:id])
-        @player.update(player_params)
-        redirect_to user_player_path(@player.user, @player)
-      end
-    else
-      @player = Player.find_by(user_id: params[:player][:user_id], id: params[:player][:id])
-      @player.update(player_params)
+    @player = Player.find_by(user_id: params[:player][:user_id], id: params[:player][:id])
+    if @player.update(player_params)
       redirect_to user_player_path(@player.user, @player)
+    else
+      render 'players/edit'
     end
   end
 

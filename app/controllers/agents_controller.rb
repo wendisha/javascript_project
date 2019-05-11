@@ -32,29 +32,20 @@ class AgentsController < ApplicationController
     if session[:user_id] != Agent.find_by_id(params[:id]).user.id
       redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your data")
     end
-    if_error
     @agent = Agent.find_by_id(params[:id])
   end
 
   def update
-    if params[:agent][:name].empty?
-      redirect_to edit_user_agent_path(User.find_by_id(params[:agent][:user_id]), Agent.find_by_id(params[:agent][:id]), error_message: "an agent must have a name")
-    elsif params[:agent][:name] != Agent.find_by_id(params[:agent][:id]).name
-      if Agent.find_by(user_id: params[:agent][:user_id], name: params[:agent][:name])
-        redirect_to edit_user_agent_path(User.find_by_id(params[:agent][:user_id]), Agent.find_by_id(params[:agent][:id]), error_message: "you have another agent by that name")
-      else
-        @agent = Agent.find_by(user_id: params[:agent][:user_id], id: params[:agent][:id])
-        @agent.update(agent_params)
-        redirect_to user_agent_path(@agent.user, @agent)
-      end
-    else
-      @agent = Agent.find_by(user_id: params[:agent][:user_id], id: params[:agent][:id])
-      @agent.update(agent_params)
+    @agent = Agent.find_by(user_id: params[:agent][:user_id], id: params[:agent][:id])
+    if @agent.update(agent_params)
       redirect_to user_agent_path(@agent.user, @agent)
+    else
+      render 'agents/edit'
     end
   end
 
   def destroy
+    authorization
     @agent = Agent.find_by(user_id: params[:user_id], id: params[:id])
     @agent.delete
     redirect_to user_agents_path(User.find_by_id(session[:user_id]))

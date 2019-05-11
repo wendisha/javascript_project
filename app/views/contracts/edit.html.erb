@@ -38,7 +38,7 @@
 <label>Agent:</label>
 <%= collection_select :contract, :agent_id, Agent.where(user_id: session[:user_id]), :id, :name, {:include_blank => 'none'} %><br>
 
-<%= hidden_field_tag "contract[user_id]", @user_id %><br>
+<%= hidden_field_tag "contract[user_id]", @contract.user_id %><br>
 
 <%= hidden_field_tag "contract[id]", @contract.id %><br>
 

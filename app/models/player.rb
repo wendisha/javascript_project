@@ -7,5 +7,4 @@ class Player < ActiveRecord::Base
 
   validates :name, presence: true
   validates_uniqueness_of :name, :scope => :user_id
-
 end

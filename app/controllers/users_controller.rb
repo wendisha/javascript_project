@@ -23,11 +23,6 @@ class UsersController < ApplicationController
   end
 
   def trophy
-    contracts = Contract.where(user_id: session[:user_id])
-    hash = {}
-    @contracts = contracts.order(transfer_fee: :desc)
-    binding.pry
-    
-
+    @contracts = Contract.where(user_id: session[:user_id]).order(transfer_fee: :desc)
   end
 end

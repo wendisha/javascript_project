@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
   get '/auth/facebook/callback' => 'sessions#create'
-  get '/users/:user_id/highest_value_contracts' => 'users#trophy'
+  get '/users/:user_id/trophy' => 'users#trophy', as: :trophy
 
   resources :users, only: [:new, :create, :show] do
     resources :contracts

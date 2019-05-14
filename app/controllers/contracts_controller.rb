@@ -1,12 +1,11 @@
 class ContractsController < ApplicationController
+  before_action :authorization, except: [:create, :update]
 
   def index
-    authorization
     @contracts = Contract.where(user_id: session[:user_id])
   end
 
   def show
-    authorization
     if session[:user_id] != Contract.find_by_id(params[:id]).user.id
       redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your data")
     end
@@ -14,13 +13,11 @@ class ContractsController < ApplicationController
   end
 
   def new
-    authorization
     @contract = Contract.new
   end
 
   def create
     @contract = Contract.new(contract_params)
-    binding.pry
     if @contract.save
       redirect_to user_contract_path(@contract.user, @contract)
     else
@@ -29,7 +26,6 @@ class ContractsController < ApplicationController
   end
 
   def edit
-    authorization
     if session[:user_id] != Contract.find_by_id(params[:id]).user.id
       redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your data")
     end
@@ -47,7 +43,6 @@ class ContractsController < ApplicationController
   end
 
   def destroy
-    authorization
     @contract = Contract.find_by(user_id: params[:user_id], id: params[:id])
     @contract.delete
     redirect_to user_contracts_path(User.find_by_id(session[:user_id]))

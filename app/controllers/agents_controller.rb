@@ -1,12 +1,11 @@
 class AgentsController < ApplicationController
+  before_action :authorization, except: [:create, :update]
 
   def index
-    authorization
     @agents = Agent.where(user_id: session[:user_id])
   end
 
   def show
-    authorization
     if session[:user_id] != Agent.find_by_id(params[:id]).user.id
       redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your data")
     end
@@ -14,7 +13,6 @@ class AgentsController < ApplicationController
   end
 
   def new
-    authorization
     @agent = Agent.new
   end
 
@@ -28,7 +26,6 @@ class AgentsController < ApplicationController
   end
 
   def edit
-    authorization
     if session[:user_id] != Agent.find_by_id(params[:id]).user.id
       redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your data")
     end
@@ -45,7 +42,6 @@ class AgentsController < ApplicationController
   end
 
   def destroy
-    authorization
     @agent = Agent.find_by(user_id: params[:user_id], id: params[:id])
     @agent.delete
     redirect_to user_agents_path(User.find_by_id(session[:user_id]))

@@ -1,0 +1,10 @@
+<h1>Highest Value Contracts Investigated</h1>
+<% counter = 1 %>
+<% @contracts.each do |contract| %>
+<% if counter < 4 %>
+<%= contract.player.name %><br>
+<%= contract.club.name %><br>
+<%= contract.transfer_fee %><br><br>
+<% counter += 1 %>
+<% end %>
+<% end %>

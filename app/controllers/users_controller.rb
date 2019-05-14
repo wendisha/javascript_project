@@ -21,4 +21,13 @@ class UsersController < ApplicationController
     if_error
     @user = User.find_by_id(params[:id])
   end
+
+  def trophy
+    contracts = Contract.where(user_id: session[:user_id])
+    hash = {}
+    @contracts = contracts.order(transfer_fee: :desc)
+    binding.pry
+    
+
+  end
 end

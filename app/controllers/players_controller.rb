@@ -1,12 +1,11 @@
 class PlayersController < ApplicationController
+  before_action :authorization, except: [:create, :update]
 
   def index
-    authorization
     @players = Player.where(user_id: session[:user_id])
   end
 
   def show
-    authorization
     if session[:user_id] != Player.find_by_id(params[:id]).user.id
       redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your data")
     end
@@ -14,7 +13,6 @@ class PlayersController < ApplicationController
   end
 
   def new
-    authorization
     @player = Player.new
   end
 
@@ -28,7 +26,6 @@ class PlayersController < ApplicationController
   end
 
   def edit
-    authorization
     if session[:user_id] != Player.find_by_id(params[:id]).user.id
       redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your data")
     end

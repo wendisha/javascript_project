@@ -1,9 +1,12 @@
+<% if @player.valid? %>
 <h1><%= @player.name %></h1>
 <p>Country of Origin: <%= @player.country_of_origin %></p>
 <p>Position: <%= @player.position %></p>
 <p>Club: <%= @player.club.name %></p>
 <p>Agent: <%= @player.agent.name %></p>
-
+<% else %>
+<p>Click the link below to add data to this player</p>
+<% end %>
 
 <%= link_to "Edit: #{@player.name}", edit_user_player_path(@player.user, @player) %>
 
@@ -22,10 +25,5 @@
 <% end %>
 <% end %>
 <br>
-<% @player.save %>
-<% if @player.errors.messages %>
-<% @player.errors.messages.each do |message| %>
-<%= message[1][0] %>
-<% end %>
-<% end %><br>
+
 <br><%= link_to "Your Home Page", user_path(User.find_by_id(session[:user_id])) %>

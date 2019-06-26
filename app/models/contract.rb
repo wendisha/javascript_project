@@ -9,6 +9,7 @@ class Contract < ActiveRecord::Base
   validate :contract_status_accurate?
 
   scope :in_effect, -> { where(status: "in effect") }
+  # scope :highest_contracts_salary
 
   def status_terminology
     if self.status != "in the works" && self.status != "pending" && self.status != "in effect" && self.status != "completed" && self.status != "terminated early" && self.status != "dead"

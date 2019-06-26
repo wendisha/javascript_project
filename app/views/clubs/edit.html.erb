@@ -24,3 +24,4 @@
 
 <%= submit_tag "Update Club" %>
 <% end %>
+<br><%= link_to "Your Home Page", user_path(User.find_by_id(session[:user_id])) %>

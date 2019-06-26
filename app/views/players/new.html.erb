@@ -27,3 +27,4 @@
 <p>The agent and club you'd like to select must be created prior to selecting them on this form.</p><br>
 <%= link_to "Create New Agent", new_user_agent_path(User.find_by_id(session[:user_id])) %><br>
 <%= link_to "Create New Club", new_user_club_path(User.find_by_id(session[:user_id])) %><br><br>
+<br><%= link_to "Your Home Page", user_path(User.find_by_id(session[:user_id])) %>

@@ -37,3 +37,4 @@
 <%= link_to "Create New Agent", new_user_agent_path(User.find_by_id(session[:user_id])) %><br>
 <%= link_to "Create New Club", new_user_club_path(User.find_by_id(session[:user_id])) %><br>
 <%= link_to "Create New Player", new_user_player_path(User.find_by_id(session[:user_id])) %><br><br>
+<br><%= link_to "Your Home Page", user_path(User.find_by_id(session[:user_id])) %>

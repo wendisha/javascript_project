@@ -1,3 +1,5 @@
+#new version: replica: javascript project
+
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 

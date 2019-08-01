@@ -2,16 +2,21 @@ class AgentsController < ApplicationController
   before_action :authorization, except: [:create, :update]
 
   def index
-    agents = Agent.where(user_id: session[:user_id])
-    render json: agents
+    @agents = Agent.where(user_id: session[:user_id])
+    respond_to do |f|
+      f.html
+      f.json {render json: @agents}
+    end
+
+    # render json: @agents
   end
 
   def show
     if session[:user_id] != Agent.find_by_id(params[:id]).user.id
       redirect_to user_path(User.find_by_id(session[:user_id]), error_message: "that is not your data")
     end
-    agent = Agent.find_by_id(params[:id])
-    render json: agent
+    @agent = Agent.find_by_id(params[:id])
+    render json: @agent
   end
 
   def new

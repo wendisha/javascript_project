@@ -7,8 +7,6 @@ class AgentsController < ApplicationController
       f.html
       f.json {render json: @agents}
     end
-
-    # render json: @agents
   end
 
   def show
